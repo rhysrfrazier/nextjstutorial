@@ -56,3 +56,31 @@ export type Invoice = {
 - Run ```npm i``` to install the project's packages
 - Then run ```npm run dev``` to start the development server
 - The NextJS development server will run on PORT 3000, so you should be able to open http://localhost:3000 to get into the demo project.
+
+## CSS Styling
+
+The front page doesn't have any style yet, so this section will fix that
+
+### Global Styles
+
+In the ```/app/ui``` folder, there's a file called ```global.css```. You can use this file to add CSS rules to all of the routes in the application, such as CSS reset rules, site-wide styles for HTML elements like links, etc.
+
+You can import ```global.css``` in any component of the application, but it's usually good practice to add it to the top-level component. In NextJS, this is called the root layer (and we'll learn more about it later)
+
+- Add global styles to the application by going into ```/app/layout.tsx``` and importing the ```global.css``` file, like so:
+
+``` ts
+import '@/app/ui/global.css';
+ 
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
