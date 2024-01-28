@@ -50,3 +50,9 @@ export type Invoice = {
   status: 'pending' | 'paid';
 };
 ```
+
+### Running the development Server
+
+- Run ```npm i``` to install the project's packages
+- Then run ```npm run dev``` to start the development server
+- The NextJS development server will run on PORT 3000, so you should be able to open http://localhost:3000 to get into the demo project.
