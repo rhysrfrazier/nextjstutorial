@@ -1,6 +1,6 @@
 # NextJS Tutorial
 
-This repo is a place to store notes about starting a new NextJS project, as well as the code as it progresses.
+This repo is a place to store notes about starting a new NextJS project, as well as the code as it progresses. I'll basically be re-creating the NextJS tutorial (which is perfectly fine, but I figured I'd take some more markdown doc practice too while I'm doing this).
 I'd like to explore the options beyond React and see what other frameworks have to offer.
 
 ## Getting started
@@ -83,4 +83,34 @@ export default function RootLayout({
     </html>
   );
 }
+```
+
+Now, after you save, you'll see that some styling has been added to your home page, even though you didn't add any CSS rules. That's because in ```global.css```, there are some ```@tailwind``` directives:
+
+``` ts
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+#### Tailwind
+
+[Tailwind](https://tailwindcss.com/) is a CSS framework that allows you to quickly write [utility classes](https://tailwindcss.com/docs/utility-first) directly into TSX markup.
+
+You style elements with Tailwind by adding class names. The following example will turn the  ```<h1>``` text blue:
+
+``` ts
+<h1 className="text-blue-500">I'm blue!</h1>
+```
+
+CSS styles are shared globally, but each class is singularly applied to each element. That means that whenever you add or delete elements, you don't have to clean up any other stylesheets, and you don't have to worry about the size of the CSS bundle growing as you need to style more components. (Complete aside: I'll probably use Tailwind or something similar for the Frazier Knives website).
+
+In the ```/app/page.tsx``` file, you'll see that Tailwind classes are used in our example code.
+
+Let's play with Tailwind a little here. Copy and paste the following code above the ```<p>``` element in ```/app/page.tsx```:
+
+``` ts
+<div
+  className="h-0 w-0 border-b-[30px] border-l-[20px] border-r-[20px] border-b-black border-l-transparent border-r-transparent"
+/>
 ```
