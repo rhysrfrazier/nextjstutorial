@@ -114,3 +114,70 @@ Let's play with Tailwind a little here. Copy and paste the following code above 
   className="h-0 w-0 border-b-[30px] border-l-[20px] border-r-[20px] border-b-black border-l-transparent border-r-transparent"
 />
 ```
+
+This code just creates a black triangle.
+
+If you'd rather like traditional CSS rules or like keeping the styles separate from JSX, CSS Modules are a great alternative.
+
+#### CSS Modules
+
+CSS Modules let you scope CSS to a component by automatically creating unique class names, so you don't have to worry about style collision (assuming you keep track of everything well enough).
+
+If you were to use CSS instead of Tailwind, you would go into the ```/app/ui``` folder, create a file called ```home/module.css```, and add the following CSS rules:
+
+``` css
+.shape {
+  height: 0;
+  width: 0;
+  border-bottom: 30px solid black;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+}
+```
+
+Then, inside ```/app/page.tsx``` import the styles and replace the Tailwind class names from the ```<div>``` you've added with ```styles.shape```:
+
+``` tsx
+import styles from '@/app/ui/home.module.css';
+<div className={styles.shape} />;
+```
+
+If you do this and save the changes, you should see the same shape as before.
+
+Tailwind and CSS modules are the two most common ways of styling Next.js applications.
+
+#### Using the ```clsx``` library to toggle class names
+
+[```clsx```](https://www.npmjs.com/package/clsx) is a library that lets you toggle class names easily, for when you need to conditionally style an element based on state or other conditions.
+
+Here are some examples of when we can use it in this demo:
+
+- If you want to create an ```InvoiceStatus``` component, which accepts a ```status``` or either ```paid``` or ```pending```
+- If you want the color to be green if it's ```paid``` and grey if it's ```pending```
+
+You can use ```clsx``` to conditionally apply classes, like so:
+
+``` tsx
+import clsx from 'clsx';
+ 
+export default function InvoiceStatus({ status }: { status: string }) {
+  return (
+    <span
+      className={clsx(
+        'inline-flex items-center rounded-full px-2 py-1 text-sm',
+        {
+          'bg-gray-100 text-gray-500': status === 'pending',
+          'bg-green-500 text-white': status === 'paid',
+        },
+      )}
+    >
+    // ...
+)}
+```
+
+#### Other Styling Solutions
+
+There are, of course, other ways you can style your NextJS application:
+
+- Sass allows you to import ```.css``` and ```.scss``` files
+- CSS-in-JS libraries like styled-jsx, styled-components, and emotion are also options
