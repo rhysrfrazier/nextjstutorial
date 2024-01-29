@@ -42,7 +42,7 @@ export default function Page() {
             width={560}
             height={620}
             className="block md:hidden " 
-            // it looks like the first classname (either block or hidden) applies to the mobile view, while the second one, following md: applies to the desktop view
+            // it looks like the first classname (either block or hidden) applies to the mobile view, while the second one, following md: applies to the desktop view. This is  a Tailwind thing
             alt="Screenshots of the dashboard project showing mobile version"
           />
         </div>
