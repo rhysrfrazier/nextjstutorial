@@ -63,3 +63,11 @@ export async function updateInvoice(id: string, formData: FormData) {
     revalidatePath('/dashboard/invoices');
     redirect('/dashboard/invoices');
 }
+
+//Delete action
+
+export async function deleteInvoice(id: string) {
+    await sql `DELETE FROM invoices WHERE id = ${id}`;
+    revalidatePath('/dashboard/invoices');
+    //you don't need a redirect here because this will happen directly on the dashboard/invoices path, instead of on any sort of detailed view. Calling revalidatePath will trigger a new server request and re-render the table
+}
