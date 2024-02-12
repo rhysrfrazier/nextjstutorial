@@ -9,7 +9,9 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
+import { updateInvoice } from '@/app/lib/actions';
 
+//invoice and customer parameters are used to pre-populate the form with the current data - easy for users to see what changes they want to make. nice.
 export default function EditInvoiceForm({
   invoice,
   customers,
@@ -17,8 +19,12 @@ export default function EditInvoiceForm({
   invoice: InvoiceForm;
   customers: CustomerField[];
 }) {
+
+  const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
+  //you MUST use bind here and not just updateInvoice(id). Bind passes data that isn't included in the form as well (in this case, the invoice id, which isn't on the form). Note: Using a hidden input field in your form also works (e.g. <input type="hidden" name="id" value={invoice.id} />). However, the values will appear as full text in the HTML source, which is not ideal for sensitive data like IDs.
+
   return (
-    <form>
+    <form action={updateInvoiceWithId}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
