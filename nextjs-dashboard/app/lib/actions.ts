@@ -16,7 +16,7 @@ const FormSchema = z.object({
     date: z.string(),
 });
 
-const CreateInvoice = FormSchema.omit({ id: true, date: true});
+const CreateInvoice = FormSchema.omit({ id: true, date: true });
 //.omit is inspired by TS's built-in Omit utility type. It pretty much does what it says on the tin, so CreateInvoice is a Type that uses the FormSchema we defined above, but doesn't include a required id or date
 
 export async function createInvoice(formData: FormData) {
@@ -31,19 +31,27 @@ export async function createInvoice(formData: FormData) {
     const date = new Date().toISOString().split('T')[0];
     //the ISO date has timestamp info after a 'T' in the string that we get back, and we aren't interested in the time info. So we split the string at the T, which gives us an array with two substrings. The first substring is the one we're interested, which is yyyy-mm-dd, so we target that part of the array with [0].
 
-    await sql`
+    try {
+        await sql`
         INSERT INTO invoices (customer_id, amount, status, date)
         VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
     `;
+    } catch (error) {
+        return {
+            message: 'Database Error: Failed to Create Invoice'
+        }
+    }
+
 
     revalidatePath('/dashboard/invoices');
     redirect('/dashboard/invoices');
     //We don't want to hang out on the form page indefinitely, so redirect the user back to the invoices page
+    //redirect must be outside the try/catch block, because it works by throwing an error that would be caught up in the catch block (which we don't want or need). Since the catch block includes a return, the redirect will only be hit if the try is successful
 }
 
 //Now adding the update action
 
-const UpdateInvoice = FormSchema.omit({ id: true, date: true});
+const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 
 export async function updateInvoice(id: string, formData: FormData) {
     const { customerId, amount, status } = UpdateInvoice.parse({
@@ -54,11 +62,19 @@ export async function updateInvoice(id: string, formData: FormData) {
 
     const amountInCents = amount * 100;
 
-    await sql`
+    try {
+        await sql`
         UPDATE invoices
         SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
         WHERE id = ${id}
     `
+    } catch (error) {
+        return {
+            message: 'Database Error: Failed to Update Invoice'
+        }
+    }
+
+
 
     revalidatePath('/dashboard/invoices');
     redirect('/dashboard/invoices');
@@ -67,7 +83,17 @@ export async function updateInvoice(id: string, formData: FormData) {
 //Delete action
 
 export async function deleteInvoice(id: string) {
-    await sql `DELETE FROM invoices WHERE id = ${id}`;
-    revalidatePath('/dashboard/invoices');
+    throw new Error('Failed to Delete Invoice')
+
+    try {
+        await sql`DELETE FROM invoices WHERE id = ${id}`;
+        revalidatePath('/dashboard/invoices');
+        return { message: 'Deleted Invoice'}
+    } catch (error) {
+        return {
+            message: 'Database Error: Failed to Delete Invoice'
+        }
+    }
+
     //you don't need a redirect here because this will happen directly on the dashboard/invoices path, instead of on any sort of detailed view. Calling revalidatePath will trigger a new server request and re-render the table
 }

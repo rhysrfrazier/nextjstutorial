@@ -1,6 +1,7 @@
 import Form from '@/app/ui/invoices/edit-form';
 import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { fetchInvoiceById, fetchCustomers } from '@/app/lib/data';
+import { notFound } from 'next/navigation'
  
 //See ui/invoices/table and look for the UpdateInvoice component to see where the ids originate and how they're passed in - it's after getting all the invoices and mapping over them
 export default async function Page({ params }: { params: { id: string } }) {
@@ -9,6 +10,11 @@ export default async function Page({ params }: { params: { id: string } }) {
         fetchInvoiceById(id),
         fetchCustomers(),
     ])
+
+    if (!invoice) {
+      notFound()
+    }
+    
   return (
     <main>
       <Breadcrumbs
