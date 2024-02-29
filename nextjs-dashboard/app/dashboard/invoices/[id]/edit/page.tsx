@@ -1,7 +1,12 @@
 import Form from '@/app/ui/invoices/edit-form';
 import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { fetchInvoiceById, fetchCustomers } from '@/app/lib/data';
-import { notFound } from 'next/navigation'
+import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Edit Invoice'
+}
  
 //See ui/invoices/table and look for the UpdateInvoice component to see where the ids originate and how they're passed in - it's after getting all the invoices and mapping over them
 export default async function Page({ params }: { params: { id: string } }) {
