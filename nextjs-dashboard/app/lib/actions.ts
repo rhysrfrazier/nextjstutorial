@@ -5,6 +5,27 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 // ^^ Next.js has a client-side router cache that stores route segments in the user's cache for a while. It does prefetching that ensures the user can quickly navigate between routes without making more calls to the server, but without including revalidatePath, that would mean our new invoices wouldn't show up on the client side, since the client side would be using stale data. revalidatePath clears the cache and triggers a new request to the server, updating the data - but only when you need to, and not constantly 
 import { redirect } from 'next/navigation';
+import { signIn } from '@/auth';
+import { AuthError } from 'next-auth';
+
+export async function authenticate(
+    prevState: string | undefined,
+    formData: FormData
+) {
+    try {
+        await signIn('credentials', formData);
+    } catch (error) {
+        if (error instanceof AuthError) {
+            switch (error.type) {
+                case 'CredentialsSignin':
+                    return 'Invalid credentials.';
+                default:
+                    return "Something went wrong";
+            }
+        }
+        throw error;
+    }
+}
 
 const FormSchema = z.object({
     id: z.string(),
@@ -13,7 +34,7 @@ const FormSchema = z.object({
     }),
     amount: z.coerce
         .number()
-        .gt(0, {message: 'Please enter an amount greater than $0'}),
+        .gt(0, { message: 'Please enter an amount greater than $0' }),
     // ^^ note that there's a setting to coerce whatever datatype was entered (in this case a string) into a number
     //stringing the .gt() method lets us tell it that we want the amount to be greater than zero, and lets us add a message to it
     status: z.enum(['pending', 'paid'], {
@@ -97,7 +118,7 @@ export async function updateInvoice(id: string, prevState: State, formData: Form
         }
     }
 
-    const {customerId, amount, status} = validatedFields.data
+    const { customerId, amount, status } = validatedFields.data
     const amountInCents = amount * 100;
 
     try {
@@ -120,12 +141,11 @@ export async function updateInvoice(id: string, prevState: State, formData: Form
 //Delete action
 
 export async function deleteInvoice(id: string) {
-    throw new Error('Failed to Delete Invoice')
 
     try {
         await sql`DELETE FROM invoices WHERE id = ${id}`;
         revalidatePath('/dashboard/invoices');
-        return { message: 'Deleted Invoice'}
+        return { message: 'Deleted Invoice' }
     } catch (error) {
         return {
             message: 'Database Error: Failed to Delete Invoice'
