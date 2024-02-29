@@ -8,10 +8,17 @@ import { redirect } from 'next/navigation';
 
 const FormSchema = z.object({
     id: z.string(),
-    customerId: z.string(),
-    amount: z.coerce.number(),
+    customerId: z.string({
+        invalid_type_error: 'Please select a customer.',
+    }),
+    amount: z.coerce
+        .number()
+        .gt(0, {message: 'Please enter an amount greater than $0'}),
     // ^^ note that there's a setting to coerce whatever datatype was entered (in this case a string) into a number
-    status: z.enum(['pending', 'paid']),
+    //stringing the .gt() method lets us tell it that we want the amount to be greater than zero, and lets us add a message to it
+    status: z.enum(['pending', 'paid'], {
+        invalid_type_error: 'Please select an invoice status'
+    }),
     //.enum is how zod declares a schema that only has certain allowable string values. These values should be passed in as an array, as we do here.
     date: z.string(),
 });
@@ -19,18 +26,41 @@ const FormSchema = z.object({
 const CreateInvoice = FormSchema.omit({ id: true, date: true });
 //.omit is inspired by TS's built-in Omit utility type. It pretty much does what it says on the tin, so CreateInvoice is a Type that uses the FormSchema we defined above, but doesn't include a required id or date
 
-export async function createInvoice(formData: FormData) {
-    const { customerId, amount, status } = CreateInvoice.parse({
+//the following is temporary until @types.react-dom is updated:
+export type State = {
+    errors?: {
+        customerId?: string[];
+        amount?: string[];
+        status?: string[];
+    };
+    message?: string | null;
+}
+
+export async function createInvoice(prevState: State, formData: FormData) {
+    // safeParse() will return an object containing either a success or error field. This will help handle validation more gracefully without having put this logic inside the try/catch block.
+    const validatedFields = CreateInvoice.safeParse({
         customerId: formData.get('customerId'),
         //the string parameters of the get come from the name field in the form component
         amount: formData.get('amount'),
         status: formData.get('status')
     });
+
+    //if form validation fails, return errors early. Otherwise, keep going
+    if (!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: 'Missing Fields. Failed to Create Invoice'
+        }
+    }
+
+    //prep data for insertion into database:
+    const { customerId, amount, status } = validatedFields.data;
     const amountInCents = amount * 100;
     // ^^ you generally want to store monetary amounts in cents for the same of precision, since it helps avoid floating-point errors
     const date = new Date().toISOString().split('T')[0];
     //the ISO date has timestamp info after a 'T' in the string that we get back, and we aren't interested in the time info. So we split the string at the T, which gives us an array with two substrings. The first substring is the one we're interested, which is yyyy-mm-dd, so we target that part of the array with [0].
 
+    //insert data into database
     try {
         await sql`
         INSERT INTO invoices (customer_id, amount, status, date)
@@ -42,7 +72,7 @@ export async function createInvoice(formData: FormData) {
         }
     }
 
-
+    //revalidate the cache for the invoices page and redirect the user
     revalidatePath('/dashboard/invoices');
     redirect('/dashboard/invoices');
     //We don't want to hang out on the form page indefinitely, so redirect the user back to the invoices page
