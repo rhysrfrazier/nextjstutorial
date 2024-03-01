@@ -1,9 +1,39 @@
 # NextJS Tutorial
 
 This repo is a place to store notes about starting a new NextJS project, as well as the code as it progresses. I'll basically be re-creating the first two sections of the  NextJS tutorial (which is perfectly fine, but I figured I'd take some more markdown doc practice too while I'm doing this). For the full tutorial this repo was pulled from, please look [here](https://nextjs.org/learn?utm_source=next-site&utm_medium=homepage-cta&utm_campaign=home).
-I'd like to explore the options beyond React and see what other frameworks have to offer.
 
-## Getting started
+## Motivation
+
+I wanted to explore the options beyond React and see what other frameworks have to offer! I'd heard that Next.js had some features that made it a better choice for SEO optimization, so was particularly interested in that to start with - and there are a lot of options for configuring metadata that I've only scratched the surface of.
+
+## Evaluation
+Thinks I like about Next.js:
+* Combination of server and client side rendering, which allows for a more app-like user experience (no full page refreshes every time you go to a different part of the site!)
+* File-system routing with nested routes. This just jives really well with my brain and I like seeing the structure of my site very clearly through the file structure
+* Ease of configuring metadata for SEO
+* Ease of implementing streaming using loading files and Suspense
+* NextAuth library, which made my first foray into authentication much simpler than I expected it to be and supports either credentials or alternative authentication providers like OAuth and email authentication.
+
+### New Technologies used:
+* Next.js (obviously)
+* Zod
+* NextAuth
+* Tailwind CSS (Love this! All the flexibility of vanilla css, all the ease of a framework, and easy to style as you go. Definitely want to use more of this)
+* TypeScript (This makes catching errors and debugging so much easier than JS and I can't wait to use more of it)
+* Vercel deployment
+* ESLint accessibility plugin
+
+## Project Demo:
+Feel free to take a look through the code - It's got some notes from the folks at Next.js, as well as my own notes when I encountered something new and wanted to annotate.
+
+If you want to see the demo in action, check out https://nextjs-demo-delta-roan.vercel.app/ with the following login credentials:
+
+user@nextmail.com
+123456
+
+Finally, feel free to send me a message if you have any questions or notice any issues!
+
+## Tutorial Beginning:
 
 ### Creating a New Project
 
@@ -181,3 +211,7 @@ There are, of course, other ways you can style your NextJS application:
 
 - Sass allows you to import ```.css``` and ```.scss``` files
 - CSS-in-JS libraries like styled-jsx, styled-components, and emotion are also options
+
+***
+
+__To keep following along, go to the [Next.js tutorial](https://nextjs.org/learn/dashboard-app/optimizing-fonts-images)__
