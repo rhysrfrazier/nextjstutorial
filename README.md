@@ -18,6 +18,7 @@ Thinks I like about Next.js:
 * Next.js (obviously)
 * Zod
 * NextAuth
+* bcrypt
 * Tailwind CSS (Love this! All the flexibility of vanilla css, all the ease of a framework, and easy to style as you go. Definitely want to use more of this)
 * TypeScript (This makes catching errors and debugging so much easier than JS and I can't wait to use more of it)
 * Vercel deployment
