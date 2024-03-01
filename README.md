@@ -18,6 +18,7 @@ Thinks I like about Next.js:
 * Next.js (obviously)
 * Zod
 * NextAuth
+* bcrypt
 * Tailwind CSS (Love this! All the flexibility of vanilla css, all the ease of a framework, and easy to style as you go. Definitely want to use more of this)
 * TypeScript (This makes catching errors and debugging so much easier than JS and I can't wait to use more of it)
 * Vercel deployment
@@ -29,6 +30,7 @@ Feel free to take a look through the code - It's got some notes from the folks a
 If you want to see the demo in action, check out https://nextjs-demo-delta-roan.vercel.app/ with the following login credentials:
 
 user@nextmail.com
+
 123456
 
 Finally, feel free to send me a message if you have any questions or notice any issues!
