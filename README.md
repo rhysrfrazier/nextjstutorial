@@ -29,6 +29,7 @@ Feel free to take a look through the code - It's got some notes from the folks a
 If you want to see the demo in action, check out https://nextjs-demo-delta-roan.vercel.app/ with the following login credentials:
 
 user@nextmail.com
+
 123456
 
 Finally, feel free to send me a message if you have any questions or notice any issues!
