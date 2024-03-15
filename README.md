@@ -218,4 +218,45 @@ There are, of course, other ways you can style your NextJS application:
 
 __To keep following along, go to the [Next.js tutorial](https://nextjs.org/learn/dashboard-app/optimizing-fonts-images)__
 
-## <a name="handbook"><a/>Employee Handbook: How to Manage Customer Invoices"
+## <a name="handbook"><a/>"Employee Handbook: How to Manage Customer Invoices"
+
+Ensuring accurate and timely invoice creation for our clients is mission-critical for the Acme billing department. In this section, we'll walk you thorugh the invoice management UI (User Interface) that you'll use on the daily.
+
+Your login credentials for the user interface are the same as your Acme intranet credentials. Once you login, you will be taken to the billing dashboard
+
+### Dashboard
+
+The billing dashboard contains useful overview information that will be used in the generation of bi-monthly reports, including the following:
+- **Collected**:
+    - Shows the dollar amount that has been collected from paid invoices over the past month
+- **Pending**:
+    - Shows the dollar amound of all currently unpaid invoices. It includes the present month, AND any unpaid invoices from previous months
+- **Total Invoices**:
+    - The total number of paid and unpaid invoices for the month
+- **Total Customers**:
+    - The total number of active Acme customers
+- **Recent Revenue**:
+    - A chart showing each month's revenue for the past year
+- **Latest Invoices**:
+    - Shows the five most recently generated invoices
+
+From the dashboard, use the "Invoices" tab on the left (or on the top, if you using a mobile device) to navigate to the invoices page.
+
+### Invoices
+
+From here, you can view, search, create, edit, or delete invoices.
+- __To browse all invoices__:
+    - Use the arrows at the bottom of the page to browse key information about all invoices. You will see the customer name, email address, amount due, date of invoice generation, and status for each invoice. Invoices are organized in the order they were created, with the most recent invoices at the top
+- __To search invoices__:
+    - Use the search bar at the top of the page to type your search criteria, then press enter. You can search by any invoice criteria (i.e. customer name, email address, amount due, date generated, or paid/pending status). Ensure that you have correct dollar amount and spelling when searching for a specific invoice.
+- __To create a new invoice__:
+    - To the right of the search bar, there is a "Create Invoice" button. Use this to create a new invoice. Simply select the correct customer from the dropdown list, enter the dollar amount due in USD, and specify whether you have already received payment for the invoice. Once you have entered the appropriate information, use the "Create Invoice" button to submit the new invoice. You can also use the "Cancel" button if needed, and invoice creation will be cancelled.
+- __To edit invoices__:
+    - Next to each invoice listing, you will find an edit button, which links to a form that allows you to edit that specific invoice. Click this button. The current invoice information will be pre-generated in the form. You can make any necessary changes, and confirm these changes by pressing the "Edit Invoice" button. If you no longer need to make edits to the invoice, use the "Cancel" button.
+- __To delete invoices__:
+    - Next to the edit button on each invoice is a delete button. WARNING: You will be unable to undo this action. If an invoice is deleted by accident you will have to contact IT. You should rarely, if ever, have to use the delete button
+
+### Customers
+The customers tab allows you to view all of Acme's current customers. You can view the dollar amount pending and paid for each customer, and can search customers the same way you searched invoices. This information may be helpful for customers that want to know the status of their overall acount.
+
+When the sales department onboards new clients, their information will automatically be populated in the billing interface.
