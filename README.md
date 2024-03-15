@@ -1,4 +1,4 @@
-# NextJS Tutorial
+# Acme Invoice Interface
 
 This repo is a place to store notes about starting a new NextJS project, as well as the code as it progresses. I'll basically be re-creating the first two sections of the  NextJS tutorial (which is perfectly fine, but I figured I'd take some more markdown doc practice too while I'm doing this). For the full tutorial this repo was pulled from, please look [here](https://nextjs.org/learn?utm_source=next-site&utm_medium=homepage-cta&utm_campaign=home). Please see the mock [Employee Handbook segment](#handbook) for documentation about how to manage client invoices.
 
